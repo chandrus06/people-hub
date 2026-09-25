@@ -1,4 +1,15 @@
-<h1>{{ title }}</h1>
-<router-outlet />
+<div class="layout-wrapper">
+    <!-- Header Component -->
+    <app-header [title]="title" (toggleSidebar)="sidebarVisible = !sidebarVisible"></app-header>
 
+    <!-- Sidenav Component -->
+    <app-sidenavbar [(visible)]="sidebarVisible"></app-sidenavbar>
 
+    <!-- Main Content -->
+    <main class="layout-content">
+        <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer Component -->
+    <app-footer [title]="title"></app-footer>
+</div>

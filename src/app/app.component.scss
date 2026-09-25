@@ -1,0 +1,29 @@
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout-header {
+    border-radius: 0 !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    z-index: 999;
+}
+
+.layout-content {
+    flex: 1 1 auto;
+    padding: 2rem;
+    background-color: var(--surface-ground);
+}
+
+.layout-footer {
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-card);
+    border-top: 1px solid var(--surface-border);
+    color: var(--text-color-secondary);
+}

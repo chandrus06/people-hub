@@ -1,0 +1,6 @@
+<p-sidebar [visible]="visible" (visibleChange)="onVisibleChange($event)">
+    <ng-template pTemplate="header">
+        <h3 style="margin: 0;">Navigation</h3>
+    </ng-template>
+    <p-menu [model]="items" [style]="{'width':'100%', 'border': 'none'}"></p-menu>
+</p-sidebar>
