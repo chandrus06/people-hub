@@ -23,21 +23,21 @@
         
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
           <div class="input-group">
-            <label for="email">Email Address</label>
+            <label for="empId">Employee ID</label>
             <span class="p-input-icon-left w-full">
-              <i class="pi pi-envelope"></i>
+              <i class="pi pi-id-card"></i>
               <input 
-                id="email" 
+                id="empId" 
                 type="text" 
                 pInputText 
-                formControlName="email" 
-                placeholder="Enter your email" 
+                formControlName="empId" 
+                placeholder="Enter your Employee ID" 
                 class="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+                [ngClass]="{'ng-invalid ng-dirty': loginForm.get('empId')?.invalid && loginForm.get('empId')?.touched}"
               />
             </span>
-            <small class="p-error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-              Valid email is required
+            <small class="p-error" *ngIf="loginForm.get('empId')?.invalid && loginForm.get('empId')?.touched">
+              Employee ID is required
             </small>
           </div>
           
