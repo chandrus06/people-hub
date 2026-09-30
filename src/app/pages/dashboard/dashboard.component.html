@@ -1,0 +1,91 @@
+<div class="dashboard-container">
+  <div class="header-section">
+    <h1>Welcome to CRUD Group of IT Solutions 👋</h1>
+    <p class="subtitle">Here is your daily update.</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Attendance Summary -->
+    <p-card header="Today's Attendance" styleClass="dashboard-card stat-card primary-gradient">
+      <div class="stat-content">
+        <div class="stat-item">
+          <i class="pi pi-sign-in"></i>
+          <div>
+            <span class="label">In Time</span>
+            <span class="value">{{ attendanceStats.inTime }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <i class="pi pi-sign-out"></i>
+          <div>
+            <span class="label">Out Time</span>
+            <span class="value">{{ attendanceStats.outTime }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-section">
+        <div class="progress-label">
+          <span>Worked: {{ attendanceStats.workedHours }}h / {{ attendanceStats.totalHours }}h</span>
+          <span>{{ attendanceStats.status }}</span>
+        </div>
+        <p-progressBar [value]="workedPercentage" [showValue]="false"></p-progressBar>
+      </div>
+    </p-card>
+
+    <!-- Leave Balance -->
+    <p-card header="Leave Balance" styleClass="dashboard-card stat-card secondary-gradient">
+      <div class="leave-stats">
+        <div class="leave-item">
+          <div class="leave-circle" [style.background]="'conic-gradient(#ffffff ' + (leaveBalance.annual.used/leaveBalance.annual.total*100) + '%, rgba(255,255,255,0.2) 0)'">
+            <span class="inner-circle">{{ leaveBalance.annual.total - leaveBalance.annual.used }}</span>
+          </div>
+          <span class="leave-label">Annual Leave</span>
+        </div>
+        <div class="leave-item">
+          <div class="leave-circle" [style.background]="'conic-gradient(#ffffff ' + (leaveBalance.sick.used/leaveBalance.sick.total*100) + '%, rgba(255,255,255,0.2) 0)'">
+            <span class="inner-circle">{{ leaveBalance.sick.total - leaveBalance.sick.used }}</span>
+          </div>
+          <span class="leave-label">Sick Leave</span>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Active Projects -->
+    <p-card header="Active Projects" styleClass="dashboard-card">
+      <div class="projects-list">
+        <div class="project-item" *ngFor="let project of activeProjects">
+          <div class="project-icon">
+            <i class="pi pi-briefcase"></i>
+          </div>
+          <div class="project-details">
+            <h4>{{ project.name }}</h4>
+            <span class="role">{{ project.role }}</span>
+          </div>
+          <div class="project-deadline">
+            <i class="pi pi-calendar"></i>
+            <span>{{ project.deadline | date:'MMM dd' }}</span>
+          </div>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <p-button label="View All Projects" styleClass="p-button-text p-button-sm"></p-button>
+      </ng-template>
+    </p-card>
+
+    <!-- Recent Tasks -->
+    <p-card header="My Tasks" styleClass="dashboard-card">
+      <div class="tasks-list">
+        <div class="task-item" *ngFor="let task of recentTasks">
+          <div class="task-info">
+            <span class="task-name">{{ task.name }}</span>
+            <span class="task-status" [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span>
+          </div>
+          <p-progressBar [value]="task.progress" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <p-button label="View All Tasks" styleClass="p-button-text p-button-sm"></p-button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

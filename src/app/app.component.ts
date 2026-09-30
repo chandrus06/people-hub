@@ -1,22 +1,33 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { SidenavbarComponent } from './layout/sidenavbar/sidenavbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { CommonModule } from '@angular/common';
 import { ApiService } from './app.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'people-hub';
   sidebarVisible = false;
+  isLoginPage = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = event.url === '/login' || event.url === '/';
+      }
+    });
+  }
 
   ngOnInit() {
     this.apiService.getMessage().subscribe((response: any) => {

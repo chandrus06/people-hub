@@ -1,0 +1,121 @@
+.attendance-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-section {
+  margin-bottom: 2rem;
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .subtitle {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+:host ::ng-deep .attendance-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.tracker-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.time-display {
+  h2 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #4f46e5;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  p {
+    color: #6b7280;
+    margin-top: 0.5rem;
+  }
+}
+
+.progress-section {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  
+  :host ::ng-deep .p-progressbar {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e5e7eb;
+    
+    .p-progressbar-value {
+      background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+      transition: width 1s linear;
+    }
+  }
+  
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+}
+
+.punch-info {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 1rem 0;
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    
+    i {
+      font-size: 2rem;
+      color: #10b981;
+      background: #d1fae5;
+      padding: 0.75rem;
+      border-radius: 12px;
+    }
+    
+    &:last-child i {
+      color: #ef4444;
+      background: #fee2e2;
+    }
+    
+    .label {
+      display: block;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    .value {
+      display: block;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

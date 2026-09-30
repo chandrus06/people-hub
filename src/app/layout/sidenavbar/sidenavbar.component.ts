@@ -15,17 +15,11 @@ export class SidenavbarComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
 
   items: MenuItem[] = [
-    { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/' },
+    { label: 'Login / Logout', icon: 'pi pi-clock', routerLink: '/attendance' },
     { separator: true },
-    { label: 'People Directory', icon: 'pi pi-users', routerLink: '/directory' },
-    { label: 'Departments', icon: 'pi pi-sitemap', routerLink: '/departments' },
-    { label: 'Recruitment', icon: 'pi pi-user-plus', routerLink: '/recruitment' },
-    { label: 'Performance', icon: 'pi pi-chart-line', routerLink: '/performance' },
-    { separator: true },
-    { label: 'Messages', icon: 'pi pi-envelope', routerLink: '/messages' },
-    { label: 'Calendar', icon: 'pi pi-calendar', routerLink: '/calendar' },
-    { separator: true },
-    { label: 'Settings', icon: 'pi pi-cog', routerLink: '/settings' }
+    { label: 'Project Updates', icon: 'pi pi-briefcase', routerLink: '/projects' },
+    { label: 'Leaves', icon: 'pi pi-calendar-times', routerLink: '/leaves' },
+    { label: 'Technology Core Teams', icon: 'pi pi-users', routerLink: '/teams' }
   ];
 
   onVisibleChange(value: boolean) {

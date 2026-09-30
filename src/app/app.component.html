@@ -1,15 +1,21 @@
-<div class="layout-wrapper">
-    <!-- Header Component -->
-    <app-header [title]="title" (toggleSidebar)="sidebarVisible = !sidebarVisible"></app-header>
+<div [ngClass]="{'layout-wrapper': !isLoginPage, 'login-layout': isLoginPage}">
+    <ng-container *ngIf="!isLoginPage">
+        <!-- Static Sidenav Component -->
+        <app-sidenavbar class="static-sidebar-container"></app-sidenavbar>
 
-    <!-- Sidenav Component -->
-    <app-sidenavbar [(visible)]="sidebarVisible"></app-sidenavbar>
+        <!-- Main Content Area -->
+        <div class="main-content-wrapper">
+            <app-header [title]="title"></app-header>
+            
+            <main class="layout-content">
+                <router-outlet></router-outlet>
+            </main>
 
-    <!-- Main Content -->
-    <main class="layout-content">
+            <app-footer [title]="title"></app-footer>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isLoginPage">
         <router-outlet></router-outlet>
-    </main>
-
-    <!-- Footer Component -->
-    <app-footer [title]="title"></app-footer>
+    </ng-container>
 </div>

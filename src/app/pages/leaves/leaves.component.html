@@ -1,0 +1,98 @@
+<div class="leaves-container">
+  <div class="header-section">
+    <h1>Leave Management</h1>
+    <p class="subtitle">View and manage your leave balances.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card gradient-casual">
+      <div class="stat-content">
+        <div class="stat-icon"><i class="pi pi-coffee"></i></div>
+        <div class="stat-info">
+          <h3>Casual Leave</h3>
+          <span class="value">{{ leaveStats.casualLeave }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-sick">
+      <div class="stat-content">
+        <div class="stat-icon"><i class="pi pi-heart"></i></div>
+        <div class="stat-info">
+          <h3>Sick Leave</h3>
+          <span class="value">{{ leaveStats.sickLeave }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-earned">
+      <div class="stat-content">
+        <div class="stat-icon"><i class="pi pi-star"></i></div>
+        <div class="stat-info">
+          <h3>Earned Leave</h3>
+          <span class="value">{{ leaveStats.earnedLeave }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-balance">
+      <div class="stat-content">
+        <div class="stat-icon"><i class="pi pi-calendar-plus"></i></div>
+        <div class="stat-info">
+          <h3>Balance Leave</h3>
+          <span class="value">{{ leaveStats.balanceLeave }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-compoff">
+      <div class="stat-content">
+        <div class="stat-icon"><i class="pi pi-clock"></i></div>
+        <div class="stat-info">
+          <h3>Comp Off</h3>
+          <span class="value">{{ leaveStats.compOff }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-footer mt-5">
+    <p-button label="Apply for Leave" icon="pi pi-plus" styleClass="p-button-primary" [rounded]="true" size="large" (onClick)="showApplyLeaveModal()"></p-button>
+  </div>
+
+  <!-- Apply Leave Modal -->
+  <p-dialog header="Apply for Leave" [(visible)]="displayLeaveModal" [modal]="true" [style]="{width: '500px'}" [draggable]="false" [resizable]="false">
+    <form [formGroup]="leaveForm" (ngSubmit)="submitLeaveApplication()" class="leave-form">
+      <div class="field mb-4">
+        <label for="leaveType" class="block mb-2 font-medium text-gray-700">Leave Type <span class="text-red-500">*</span></label>
+        <p-dropdown id="leaveType" [options]="leaveTypes" formControlName="leaveType" placeholder="Select Leave Type" styleClass="w-full"></p-dropdown>
+      </div>
+
+      <div class="field mb-4">
+        <label for="numberOfDays" class="block mb-2 font-medium text-gray-700">No. of Days <span class="text-red-500">*</span></label>
+        <p-inputNumber id="numberOfDays" formControlName="numberOfDays" [min]="0.5" [step]="0.5" [showButtons]="true" styleClass="w-full" class="w-full"></p-inputNumber>
+      </div>
+
+      <div class="form-grid-2 mb-4">
+        <div class="field">
+          <label for="fromDate" class="block mb-2 font-medium text-gray-700">From Date <span class="text-red-500">*</span></label>
+          <p-calendar id="fromDate" formControlName="fromDate" [showIcon]="true" styleClass="w-full" class="w-full" appendTo="body"></p-calendar>
+        </div>
+        <div class="field">
+          <label for="toDate" class="block mb-2 font-medium text-gray-700">To Date <span class="text-red-500">*</span></label>
+          <p-calendar id="toDate" formControlName="toDate" [showIcon]="true" styleClass="w-full" class="w-full" appendTo="body"></p-calendar>
+        </div>
+      </div>
+
+      <div class="field mb-4">
+        <label for="reason" class="block mb-2 font-medium text-gray-700">Reason <span class="text-red-500">*</span></label>
+        <textarea id="reason" rows="3" pInputTextarea formControlName="reason" class="w-full" placeholder="Enter reason for leave"></textarea>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <p-button label="Cancel" icon="pi pi-times" [text]="true" severity="secondary" (onClick)="hideApplyLeaveModal()"></p-button>
+      <p-button label="Submit Application" icon="pi pi-check" (onClick)="submitLeaveApplication()" [disabled]="leaveForm.invalid"></p-button>
+    </ng-template>
+  </p-dialog>
+</div>
