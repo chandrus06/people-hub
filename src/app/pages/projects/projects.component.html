@@ -1,0 +1,141 @@
+<div class="projects-container">
+  <div class="header-section">
+    <h1>Project Work Updates</h1>
+    <p class="subtitle">Manage your project profile and submit daily work statuses.</p>
+  </div>
+
+  <div class="content-section">
+    <!-- Project Details Section -->
+    <p-card styleClass="form-card mb-5">
+      <ng-template pTemplate="header">
+        <div class="card-header-flex">
+          <h3>Project Information</h3>
+          <p-button *ngIf="!isEditingDetails" icon="pi pi-pencil" [text]="true" [rounded]="true" (onClick)="editProjectDetails()"></p-button>
+        </div>
+      </ng-template>
+
+      <!-- Read-only View -->
+      <div class="read-only-details" *ngIf="!isEditingDetails && projectDetails">
+        <div class="detail-row">
+          <span class="detail-label">Project Name</span>
+          <span class="detail-value">{{ projectDetails.projectName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Client Name</span>
+          <span class="detail-value">{{ projectDetails.clientName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Technology</span>
+          <span class="detail-value">{{ projectDetails.technologyName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Role</span>
+          <span class="detail-value">{{ getRoleLabel(projectDetails.role) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Experience</span>
+          <span class="detail-value">{{ projectDetails.yearsOfExperience }} Years</span>
+        </div>
+      </div>
+
+      <!-- Edit Form View -->
+      <form *ngIf="isEditingDetails" [formGroup]="projectDetailsForm" (ngSubmit)="saveProjectDetails()" class="update-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="projectName">Project Name <span class="required">*</span></label>
+            <input id="projectName" type="text" pInputText formControlName="projectName" class="w-full" />
+          </div>
+          
+          <div class="field">
+            <label for="clientName">Client Name <span class="required">*</span></label>
+            <input id="clientName" type="text" pInputText formControlName="clientName" class="w-full" />
+          </div>
+
+          <div class="field">
+            <label for="technologyName">Technology Name <span class="required">*</span></label>
+            <input id="technologyName" type="text" pInputText formControlName="technologyName" class="w-full" placeholder="e.g. Angular, Node.js" />
+          </div>
+
+          <div class="field">
+            <label for="role">Role <span class="required">*</span></label>
+            <p-dropdown id="role" [options]="roles" formControlName="role" placeholder="Select a Role" styleClass="w-full"></p-dropdown>
+          </div>
+
+          <div class="field">
+            <label for="yearsOfExperience">Years of Experience <span class="required">*</span></label>
+            <p-inputNumber id="yearsOfExperience" formControlName="yearsOfExperience" styleClass="w-full" class="w-full"></p-inputNumber>
+          </div>
+        </div>
+        <div class="submit-action mt-4">
+          <p-button type="submit" label="Save Project Details" styleClass="p-button-primary"></p-button>
+        </div>
+      </form>
+    </p-card>
+
+    <div class="updates-section">
+      <h2 class="section-title">Project Updates</h2>
+      
+      <p-card styleClass="tabs-card">
+        <p-tabView>
+          <!-- Today Update Tab -->
+          <p-tabPanel header="Today Update">
+            <form [formGroup]="dailyUpdateForm" (ngSubmit)="submitDailyUpdate()" class="update-form py-3">
+              <div class="field">
+                <label for="assignedTask">Assigned Tasks <span class="required">*</span></label>
+                <textarea id="assignedTask" rows="3" pInputTextarea formControlName="assignedTask" class="w-full" placeholder="What were you assigned today?"></textarea>
+              </div>
+
+              <div class="field mt-3">
+                <label for="completedTask">Completed Tasks <span class="required">*</span></label>
+                <textarea id="completedTask" rows="3" pInputTextarea formControlName="completedTask" class="w-full" placeholder="What did you complete?"></textarea>
+              </div>
+
+              <div class="field mt-3">
+                <label for="pendingTask">Pending Tasks <span class="required">*</span></label>
+                <textarea id="pendingTask" rows="3" pInputTextarea formControlName="pendingTask" class="w-full" placeholder="What is left for tomorrow?"></textarea>
+              </div>
+
+              <div class="submit-action mt-4">
+                <p-button type="submit" label="Submit Daily Update" icon="pi pi-send" styleClass="p-button-success"></p-button>
+              </div>
+            </form>
+          </p-tabPanel>
+
+          <!-- Previous Updates Tab -->
+          <p-tabPanel header="Previous Updates">
+            <div *ngIf="submittedUpdates.length === 0" class="no-updates">
+              <i class="pi pi-inbox"></i>
+              <p>No daily updates submitted yet.</p>
+            </div>
+            
+            <div class="history-list py-3" *ngIf="submittedUpdates.length > 0">
+              <div class="history-item" *ngFor="let update of submittedUpdates">
+                <div class="history-item-header">
+                  <div class="date-badge">
+                    <span class="day">{{ update.date | date:'dd' }}</span>
+                    <span class="month">{{ update.date | date:'MMM' }}</span>
+                  </div>
+                  <div class="time">{{ update.date | date:'h:mm a' }}</div>
+                </div>
+                <div class="history-item-body">
+                  <div class="task-group">
+                    <span class="group-label"><i class="pi pi-list"></i> Assigned</span>
+                    <p>{{ update.assignedTask }}</p>
+                  </div>
+                  <div class="task-group success">
+                    <span class="group-label"><i class="pi pi-check-circle"></i> Completed</span>
+                    <p>{{ update.completedTask }}</p>
+                  </div>
+                  <div class="task-group warning">
+                    <span class="group-label"><i class="pi pi-clock"></i> Pending</span>
+                    <p>{{ update.pendingTask }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </p-card>
+    </div>
+  </div>
+</div>

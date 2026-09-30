@@ -1,0 +1,57 @@
+<div class="attendance-container">
+  <div class="header-section">
+    <h1>Time Tracking</h1>
+    <p class="subtitle">Record your daily in and out times.</p>
+  </div>
+
+  <p-card styleClass="attendance-card">
+    <div class="tracker-wrapper">
+      <div class="time-display">
+        <h2>{{ formattedWorkedTime }}</h2>
+        <p>Total time worked today (Target: 9 hours)</p>
+      </div>
+
+      <div class="progress-section">
+        <p-progressBar [value]="progressPercentage" [showValue]="false"></p-progressBar>
+        <div class="progress-labels">
+          <span>0h</span>
+          <span>9h</span>
+        </div>
+      </div>
+
+      <div class="punch-info" *ngIf="inTime">
+        <div class="info-item">
+          <i class="pi pi-sign-in"></i>
+          <div>
+            <span class="label">Punched In At</span>
+            <span class="value">{{ inTime | date:'hh:mm:ss a' }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="outTime">
+          <i class="pi pi-sign-out"></i>
+          <div>
+            <span class="label">Punched Out At</span>
+            <span class="value">{{ outTime | date:'hh:mm:ss a' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <p-button 
+          label="Punch In (Login)" 
+          icon="pi pi-sign-in" 
+          [disabled]="inTime !== null" 
+          (onClick)="punchIn()" 
+          styleClass="p-button-success w-full lg:w-auto mr-0 lg:mr-3 mb-3 lg:mb-0">
+        </p-button>
+        <p-button 
+          label="Punch Out (Logout)" 
+          icon="pi pi-sign-out" 
+          [disabled]="inTime === null || outTime !== null" 
+          (onClick)="punchOut()" 
+          styleClass="p-button-danger w-full lg:w-auto">
+        </p-button>
+      </div>
+    </div>
+  </p-card>
+</div>

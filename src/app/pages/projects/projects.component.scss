@@ -1,0 +1,251 @@
+.projects-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header-section {
+  margin-bottom: 2rem;
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .subtitle {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-5 { margin-bottom: 2.5rem; }
+.py-3 { padding: 1rem 0; }
+
+:host ::ng-deep .form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: none;
+
+  .p-card-header {
+    background: #f9fafb;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 1.5rem;
+  }
+}
+
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1f2937;
+  }
+}
+
+.read-only-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1rem 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    .detail-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    
+    .detail-value {
+      font-size: 1rem;
+      color: #1f2937;
+      font-weight: 600;
+    }
+  }
+}
+
+.update-form {
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    label {
+      font-weight: 500;
+      color: #374151;
+      
+      .required {
+        color: #ef4444;
+      }
+    }
+  }
+  
+  .mt-3 { margin-top: 1rem; }
+  .mt-4 { margin-top: 1.5rem; }
+}
+
+.updates-section {
+  .section-title {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+  }
+}
+
+:host ::ng-deep .tabs-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: none;
+  
+  .p-card-body {
+    padding: 0;
+  }
+  
+  .p-tabview-panels {
+    padding: 1.5rem;
+  }
+}
+
+.no-updates {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+  color: #9ca3af;
+  
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.history-item {
+  border-left: 2px solid #e5e7eb;
+  padding-left: 1.5rem;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4f46e5;
+  }
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  
+  .date-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #e0e7ff;
+    color: #4f46e5;
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+    
+    .day {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .month {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+  
+  .time {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+}
+
+.history-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.task-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  
+  .group-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+  
+  &.success .group-label {
+    color: #10b981;
+  }
+  
+  &.warning .group-label {
+    color: #f59e0b;
+  }
+}

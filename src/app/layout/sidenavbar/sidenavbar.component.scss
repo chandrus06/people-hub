@@ -1,0 +1,39 @@
+.static-sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid var(--surface-border, #e5e7eb);
+    
+    h3 {
+        color: var(--primary-color, #4f46e5);
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+}
+
+:host ::ng-deep .p-menu {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    
+    .p-menuitem-link {
+        padding: 1rem 1.5rem;
+        
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    
+    .p-menuitem-icon {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .p-menuitem-text {
+        font-weight: 500;
+    }
+}

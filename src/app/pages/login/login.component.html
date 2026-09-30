@@ -1,0 +1,79 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="login-left">
+      <div class="brand-info">
+        <div class="logo">
+          <i class="pi pi-users"></i>
+          <span>PeopleHub</span>
+        </div>
+        <h1>Manage your workforce efficiently</h1>
+        <p>Your complete HR and Employee Management solution. Track attendance, manage leaves, and oversee projects all in one place.</p>
+      </div>
+      
+      <div class="glass-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+      </div>
+    </div>
+    
+    <div class="login-right">
+      <div class="login-box">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Please enter your details to sign in.</p>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-envelope"></i>
+              <input 
+                id="email" 
+                type="text" 
+                pInputText 
+                formControlName="email" 
+                placeholder="Enter your email" 
+                class="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+              />
+            </span>
+            <small class="p-error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+              Valid email is required
+            </small>
+          </div>
+          
+          <div class="input-group">
+            <label for="password">Password</label>
+            <p-password 
+              id="password" 
+              formControlName="password" 
+              [toggleMask]="true" 
+              [feedback]="false"
+              placeholder="Enter your password"
+              styleClass="w-full"
+              inputStyleClass="w-full pl-3"
+              [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+            </p-password>
+            <small class="p-error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              Password is required
+            </small>
+          </div>
+          
+          <div class="form-options">
+            <div class="remember-me">
+              <p-checkbox formControlName="rememberMe" binary="true" inputId="remember"></p-checkbox>
+              <label for="remember">Remember me</label>
+            </div>
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+          
+          <p-button 
+            type="submit" 
+            label="Sign In" 
+            [loading]="isLoading" 
+            styleClass="w-full primary-btn">
+          </p-button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
