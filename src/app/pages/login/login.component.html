@@ -24,7 +24,6 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
           <div class="input-group">
-<<<<<<< Updated upstream
             <label for="empId">Employee ID</label>
             <span class="p-input-icon-left w-full">
               <i class="pi pi-id-card"></i>
@@ -39,28 +38,6 @@
               />
             </span>
             <small class="p-error" *ngIf="loginForm.get('empId')?.invalid && loginForm.get('empId')?.touched">
-=======
-
-            <label for="empId">Employee ID</label>
-
-            <span class="p-input-icon-left w-full">
-
-              <i class="pi pi-user"></i>
-
-              <input id="empId" type="text" pInputText formControlName="empId" placeholder="Enter your Employee ID"
-                class="w-full" [ngClass]="{
-        'ng-invalid ng-dirty':
-        loginForm.get('empId')?.invalid &&
-        loginForm.get('empId')?.touched
-      }" />
-
-            </span>
-
-            <small class="p-error" *ngIf="
-      loginForm.get('empId')?.invalid &&
-      loginForm.get('empId')?.touched
-    ">
->>>>>>> Stashed changes
               Employee ID is required
             </small>
 
