@@ -1,50 +1,93 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
+import { ApiService } from '../../app.service';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
+
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    CardModule, 
-    InputTextModule, 
-    ButtonModule, 
+    CommonModule,
+    ReactiveFormsModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
     CheckboxModule,
     PasswordModule
   ],
+
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+
   loginForm: FormGroup;
   isLoading = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private apiService: ApiService
+  ) {
+
     this.loginForm = this.fb.group({
       empId: ['', Validators.required],
       password: ['', Validators.required],
       rememberMe: [false]
     });
+
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
-      // Simulate API call
-      setTimeout(() => {
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      }, 1500);
-    } else {
+
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      return;
     }
+
+    this.isLoading = true;
+
+    const loginData = {
+      empId: this.loginForm.value.empId,
+      password: this.loginForm.value.password
+    };
+
+    this.apiService.loginUser(loginData).subscribe({
+
+      next: (response) => {
+
+        this.isLoading = false;
+
+        this.router.navigate(['/dashboard']);
+
+      },
+
+      error: (error) => {
+
+        this.isLoading = false;
+
+        alert(
+          error.error?.message || 'Invalid Employee ID or Password'
+        );
+
+      }
+
+    });
   }
 }
