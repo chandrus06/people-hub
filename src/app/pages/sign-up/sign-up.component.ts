@@ -27,7 +27,7 @@ export class SignupComponent {
 
     this.signupForm = this.fb.group({
 
-      FirstName: [
+      firstName: [
         '',
         [
           Validators.required,
@@ -35,15 +35,22 @@ export class SignupComponent {
         ]
       ],
 
-        LastName: [
+        lastName: [
         '',
         [
           Validators.required,
           Validators.minLength(3)
         ]
       ],
+
+      company:[
+        '',
+        [
+          Validators.required
+        ]
+      ],
          
-      employeeId:[
+      empId:[
         '',
         [
           Validators.required,

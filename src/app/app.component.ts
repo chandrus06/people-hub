@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/';
+        this.isLoginPage = event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/signup';
       }
     });
   }
