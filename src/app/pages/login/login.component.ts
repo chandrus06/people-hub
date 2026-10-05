@@ -4,7 +4,7 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 } from '@angular/forms';
 
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
 import { ApiService } from '../../app.service';
-
+import { AuthService } from '../../core/guards/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,33 +29,29 @@ import { ApiService } from '../../app.service';
     InputTextModule,
     ButtonModule,
     CheckboxModule,
-    PasswordModule
+    PasswordModule,
   ],
 
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
   isLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private apiService: ApiService
+    private authService: AuthService,
   ) {
-
     this.loginForm = this.fb.group({
       empId: ['', Validators.required],
       password: ['', Validators.required],
-      rememberMe: [false]
+      rememberMe: [false],
     });
-
   }
 
   onSubmit() {
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -65,29 +61,18 @@ export class LoginComponent {
 
     const loginData = {
       empId: this.loginForm.value.empId,
-      password: this.loginForm.value.password
+      password: this.loginForm.value.password,
     };
 
-    this.apiService.loginUser(loginData).subscribe({
-
-      next: (response) => {
-
+    this.authService.loginUser(loginData).subscribe({
+      next: (response: any) => {
         this.isLoading = false;
-
         this.router.navigate(['/dashboard']);
-
       },
-
-      error: (error) => {
-
+      error: (error: any) => {
         this.isLoading = false;
-
-        alert(
-          error.error?.message || 'Invalid Employee ID or Password'
-        );
-
+        alert('Invalid Employee ID or Password');
       }
-
     });
   }
 }
