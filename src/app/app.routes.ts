@@ -8,13 +8,36 @@ import { TeamsComponent } from './pages/teams/teams.component';
 import { SignupComponent } from './pages/sign-up/sign-up.component';
 
 
+import { AuthGuard } from './core/guards/auth.guard';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'signup', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'attendance', component: AttendanceComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'leaves', component: LeavesComponent },
-  { path: 'teams', component: TeamsComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'attendance',
+    component: AttendanceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'projects',
+    component: ProjectsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'leaves',
+    component: LeavesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'teams',
+    component: TeamsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

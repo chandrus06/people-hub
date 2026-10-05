@@ -1,38 +1,54 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
+import { ApiService } from '../../app.service';
+import { AuthService } from '../../core/guards/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    CardModule, 
-    InputTextModule, 
-    ButtonModule, 
+    CommonModule,
+    ReactiveFormsModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
     CheckboxModule,
-    PasswordModule
+    PasswordModule,
   ],
+
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
   registeredUser: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+  ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      empId: ['', Validators.required],
       password: ['', Validators.required],
-      rememberMe: [false]
+      rememberMe: [false],
     });
   }
 
@@ -45,6 +61,7 @@ export class LoginComponent {
       }, 1500);
     } else {
       this.loginForm.markAllAsTouched();
+      return;
     }
 
     const registeredUser = localStorage.getItem('user');

@@ -5,11 +5,12 @@ import { SidenavbarComponent } from './layout/sidenavbar/sidenavbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { ApiService } from './app.service';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = event.url === '/login' || event.url === '/signup'  || event.url === '/';
+        this.isLoginPage = event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/';
       }
     });
   }
