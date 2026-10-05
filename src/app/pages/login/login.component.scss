@@ -43,7 +43,7 @@
       font-weight: 700;
       margin-bottom: 3rem;
       
-      i {
+      i{
         font-size: 2rem;
         background: rgba(255,255,255,0.2);
         padding: 0.5rem;
@@ -228,5 +228,46 @@
   
   .login-right {
     padding: 3rem 2rem;
+  }
+}
+
+.signup-link {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 20px;
+
+  font-size: 13px;
+
+
+  span {
+    color: #777777;
+  }
+
+
+  button {
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #2874f0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

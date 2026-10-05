@@ -24,14 +24,14 @@ export class AppComponent implements OnInit {
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = event.url === '/login' || event.url === '/';
+        this.isLoginPage = event.url === '/login' || event.url === '/signup'  || event.url === '/';
       }
     });
   }
 
   ngOnInit() {
-    this.apiService.getMessage().subscribe((response: any) => {
-      console.log(response);
-    });
+    // this.apiService.getMessage().subscribe((response: any) => {
+    //   console.log(response);
+    // });
   }
 }

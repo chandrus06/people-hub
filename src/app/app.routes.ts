@@ -5,9 +5,12 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { LeavesComponent } from './pages/leaves/leaves.component';
 import { LoginComponent } from './pages/login/login.component';
 import { TeamsComponent } from './pages/teams/teams.component';
+import { SignupComponent } from './pages/sign-up/sign-up.component';
+
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'signup', pathMatch: 'full' },
+  { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'attendance', component: AttendanceComponent },

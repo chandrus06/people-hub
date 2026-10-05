@@ -26,6 +26,7 @@ import { PasswordModule } from 'primeng/password';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
+  registeredUser: any;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
@@ -41,10 +42,34 @@ export class LoginComponent {
       // Simulate API call
       setTimeout(() => {
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
       }, 1500);
     } else {
       this.loginForm.markAllAsTouched();
     }
+
+    const registeredUser = localStorage.getItem('user');
+    
+
+    if (!registeredUser) {
+       alert('No registered user found. Please signup first.'); 
+        return; }
+     
+       const loginEmail = this.loginForm.get('email')?.value; 
+      const loginPassword = this.loginForm.get('password')?.value;
+    
+       const Signup = JSON.parse(registeredUser);
+    
+     if ( loginEmail === Signup.email &&
+       loginPassword === Signup.password )   { 
+        localStorage.setItem( 'loggedInUser', JSON.stringify(Signup) );
+      alert('Login successful!');  
+      this.router.navigate(['/dashboard']); }
+      else { 
+       alert('Invalid email or password'); } }
+
+  gotoSignup():void{
+    this.router.navigate(['/signup']);
   }
+
+  
 }
