@@ -38,6 +38,7 @@ import { AuthService } from '../../core/guards/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
+  registeredUser: any;
 
   constructor(
     private fb: FormBuilder,
@@ -52,27 +53,40 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      // Simulate API call
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1500);
+    } else {
       this.loginForm.markAllAsTouched();
       return;
     }
 
-    this.isLoading = true;
+    const registeredUser = localStorage.getItem('user');
+    
 
-    const loginData = {
-      empId: this.loginForm.value.empId,
-      password: this.loginForm.value.password,
-    };
+    if (!registeredUser) {
+       alert('No registered user found. Please signup first.'); 
+        return; }
+     
+       const loginEmail = this.loginForm.get('email')?.value; 
+      const loginPassword = this.loginForm.get('password')?.value;
+    
+       const Signup = JSON.parse(registeredUser);
+    
+     if ( loginEmail === Signup.email &&
+       loginPassword === Signup.password )   { 
+        localStorage.setItem( 'loggedInUser', JSON.stringify(Signup) );
+      alert('Login successful!');  
+      this.router.navigate(['/dashboard']); }
+      else { 
+       alert('Invalid email or password'); } }
 
-    this.authService.loginUser(loginData).subscribe({
-      next: (response: any) => {
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error: any) => {
-        this.isLoading = false;
-        alert('Invalid Employee ID or Password');
-      }
-    });
+  gotoSignup():void{
+    this.router.navigate(['/signup']);
   }
+
+  
 }

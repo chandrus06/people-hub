@@ -61,8 +61,16 @@
             </div>
             <a href="#" class="forgot-password">Forgot password?</a>
           </div>
-
-          <p-button type="submit" label="Sign In" [loading]="isLoading" styleClass="w-full primary-btn">
+          <div class="signup-link">
+            <span>Don't have an Account?</span>
+            <button type="button" (click)="gotoSignup()">Signup</button>
+          </div>
+          
+          <p-button 
+            type="submit" 
+            label="Sign In" 
+            [loading]="isLoading" 
+            styleClass="w-full primary-btn">
           </p-button>
         </form>
       </div>
