@@ -1,305 +1,224 @@
 <div class="signup-page">
-<div class="signup-container">
+  <div class="signup-container">
+    <div class="signup-card">
+      <!-- LEFT SIDE -->
 
-  <div class="signup-card">
-
-    <!-- LEFT SIDE -->
-
-     <div class="login-left">
-      <div class="brand-info">
-        <div class="logo">
-          <i class="pi pi-users"></i>
-          <span>PeopleHub</span>
+      <div class="login-left">
+        <div class="brand-info">
+          <div class="logo">
+            <i class="pi pi-users"></i>
+            <span>PeopleHub</span>
+          </div>
+          <h1>Manage your workforce efficiently</h1>
+          <p>
+            Your complete HR and Employee Management solution. Track attendance,
+            manage leaves, and oversee projects all in one place.
+          </p>
         </div>
-        <h1>Manage your workforce efficiently</h1>
-        <p>Your complete HR and Employee Management solution. Track attendance, manage leaves, and oversee projects all in one place.</p>
+
+        <div class="glass-circles">
+          <div class="circle circle-1"></div>
+          <div class="circle circle-2"></div>
+        </div>
       </div>
-      
-      <div class="glass-circles">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
+
+      <!-- RIGHT SIDE -->
+
+      <div class="signup-form-container">
+        <div class="login-box">
+          <h2>Create Account</h2>
+
+          <p class="subtitle">Please fill in the details below</p>
+
+          <!-- FORM -->
+
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <!-- FULL NAME -->
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  placeholder="Enter your First name"
+                />
+
+                @if (
+                  signupForm.get("firstName")?.touched &&
+                  signupForm.get("firstName")?.hasError("required")
+                ) {
+                  <small> First name is required </small>
+                }
+
+                @if (
+                  signupForm.get("firstName")?.touched &&
+                  signupForm.get("firstName")?.hasError("minlength")
+                ) {
+                  <small> Minimum 3 characters required </small>
+                }
+              </div>
+
+              <div class="form-group">
+                <label>Last Name</label>
+
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  placeholder="Enter your Last name"
+                />
+
+                @if (
+                  signupForm.get("lastName")?.touched &&
+                  signupForm.get("lastName")?.hasError("required")
+                ) {
+                  <small> Last name is required </small>
+                }
+
+                @if (
+                  signupForm.get("lastName")?.touched &&
+                  signupForm.get("lastName")?.hasError("minlength")
+                ) {
+                  <small> Minimum 3 characters required </small>
+                }
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Employee ID</label>
+
+              <input
+                type="text"
+                formControlName="empId"
+                placeholder="Enter employee ID"
+              />
+
+              @if (
+                signupForm.get("empId")?.touched &&
+                signupForm.get("empId")?.hasError("required")
+              ) {
+                <small> Employee ID is required </small>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Company</label>
+
+              <input
+                type="text"
+                formControlName="company"
+                placeholder="Enter company name"
+              />
+
+              @if (
+                signupForm.get("company")?.touched &&
+                signupForm.get("company")?.hasError("required")
+              ) {
+                <small> Company is required </small>
+              }
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+              <label>Email</label>
+
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email"
+              />
+
+              @if (
+                signupForm.get("email")?.touched &&
+                signupForm.get("email")?.hasError("required")
+              ) {
+                <small> Email is required </small>
+              }
+
+              @if (
+                signupForm.get("email")?.touched &&
+                signupForm.get("email")?.hasError("email")
+              ) {
+                <small> Please enter a valid email address </small>
+              }
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+              <label>Password</label>
+
+              <input
+                type="password"
+                formControlName="password"
+                placeholder="Enter your password"
+              />
+
+              @if (
+                signupForm.get("password")?.touched &&
+                signupForm.get("password")?.hasError("required")
+              ) {
+                <small> Password is required </small>
+              }
+
+              @if (
+                signupForm.get("password")?.touched &&
+                signupForm.get("password")?.hasError("minlength")
+              ) {
+                <small> Password must be at least 8 characters </small>
+              }
+            </div>
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+              <label>Confirm Password</label>
+
+              <input
+                type="password"
+                formControlName="confirmPassword"
+                placeholder="Confirm your password"
+              />
+
+              @if (
+                signupForm.get("confirmPassword")?.touched &&
+                signupForm.get("confirmPassword")?.hasError("required")
+              ) {
+                <small> Please confirm your password </small>
+              }
+            </div>
+
+            <!-- TERMS -->
+
+            <div class="terms">
+              <input type="checkbox" formControlName="termsAccepted" />
+
+              <label> I agree to the Terms & Conditions </label>
+            </div>
+
+            @if (
+              signupForm.get("termsAccepted")?.touched &&
+              signupForm.get("termsAccepted")?.hasError("required")
+            ) {
+              <small> You must accept the Terms & Conditions </small>
+            }
+
+            <!-- BUTTON -->
+
+            <button type="submit" class="signup-button">Create Account</button>
+
+            <!-- LOGIN -->
+
+            <div class="login-link">
+              <span> Already have an account? </span>
+
+              <button type="button" (click)="goToLogin()">Login</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-
-
-    <!-- RIGHT SIDE -->
-
-    <div class="signup-form-container">
-      <div class="login-box">
-      <h2>Create Account</h2>
-
-      <p class="subtitle">
-        Please fill in the details below
-      </p>
-
-
-      <!-- FORM -->
-
-      <form
-        [formGroup]="signupForm"
-        (ngSubmit)="onSubmit()"
-      >
-
-
-        <!-- FULL NAME -->
-
-        <div class="form-row">
-
-        <div class="form-group">
-
-          <label>First Name</label>
-
-          <input
-            type="text"
-            formControlName="FirstName"
-            placeholder="Enter your First name"
-          >
-
-          @if (
-            signupForm.get('FirstName')?.touched &&
-            signupForm.get('FirstName')?.hasError('required')
-          ) {
-
-            <small>
-              First name is required
-            </small>
-
-          }
-
-          @if (
-            signupForm.get('FirstName')?.touched &&
-            signupForm.get('FirstName')?.hasError('minlength')
-          ) {
-
-            <small>
-              Minimum 3 characters required
-            </small>
-
-          }
-
-        </div>
-
-          <div class="form-group">
-
-          <label>Last Name</label>
-
-          <input
-            type="text"
-            formControlName="LastName"
-            placeholder="Enter your Last name"
-          >
-
-          @if (
-            signupForm.get('LastName')?.touched &&
-            signupForm.get('LastName')?.hasError('required')
-          ) {
-
-            <small>
-              Last name is required
-            </small>
-
-          }
-
-          @if (
-            signupForm.get('LastName')?.touched &&
-            signupForm.get('LastName')?.hasError('minlength')
-          ) {
-
-            <small>
-              Minimum 3 characters required
-            </small>
-
-          }
-
-        </div>
-        </div>
-
-
-        <div class="form-group">
-
-  <label>Employee ID</label>
-
-  <input
-    type="text"
-    formControlName="employeeId"
-    placeholder="Enter employee ID"
-  >
-
-  @if (
-    signupForm.get('employeeId')?.touched &&
-    signupForm.get('employeeId')?.hasError('required')
-  ) {
-
-    <small>
-      Employee ID is required
-    </small>
-
-  }
-
-</div>
-
-        <!-- EMAIL -->
-
-        <div class="form-group">
-
-          <label>Email</label>
-
-          <input
-            type="email"
-            formControlName="email"
-            placeholder="Enter your email"
-          >
-
-          @if (
-            signupForm.get('email')?.touched &&
-            signupForm.get('email')?.hasError('required')
-          ) {
-
-            <small>
-              Email is required
-            </small>
-
-          }
-
-          @if (
-            signupForm.get('email')?.touched &&
-            signupForm.get('email')?.hasError('email')
-          ) {
-
-            <small>
-              Please enter a valid email address
-            </small>
-
-          }
-
-        </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="form-group">
-
-          <label>Password</label>
-
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Enter your password"
-          >
-
-          @if (
-            signupForm.get('password')?.touched &&
-            signupForm.get('password')?.hasError('required')
-          ) {
-
-            <small>
-              Password is required
-            </small>
-
-          }
-
-          @if (
-            signupForm.get('password')?.touched &&
-            signupForm.get('password')?.hasError('minlength')
-          ) {
-
-            <small>
-              Password must be at least 8 characters
-            </small>
-
-          }
-
-        </div>
-
-
-        <!-- CONFIRM PASSWORD -->
-
-        <div class="form-group">
-
-          <label>Confirm Password</label>
-
-          <input
-            type="password"
-            formControlName="confirmPassword"
-            placeholder="Confirm your password"
-          >
-
-          @if (
-            signupForm.get('confirmPassword')?.touched &&
-            signupForm.get('confirmPassword')?.hasError('required')
-          ) {
-
-            <small>
-              Please confirm your password
-            </small>
-
-          }
-
-        </div>
-
-
-        <!-- TERMS -->
-
-        <div class="terms">
-
-          <input
-            type="checkbox"
-            formControlName="termsAccepted"
-          >
-
-          <label>
-            I agree to the Terms & Conditions
-          </label>
-
-        </div>
-
-        @if (
-          signupForm.get('termsAccepted')?.touched &&
-          signupForm.get('termsAccepted')?.hasError('required')
-        ) {
-
-          <small>
-            You must accept the Terms & Conditions
-          </small>
-
-        }
-
-
-        <!-- BUTTON -->
-
-        <button
-          type="submit"
-          class="signup-button"
-        >
-          Create Account
-        </button>
-
-
-        <!-- LOGIN -->
-
-        <div class="login-link">
-
-          <span>
-            Already have an account?
-          </span>
-
-          <button
-            type="button"
-            (click)="goToLogin()"
-          >
-            Login
-          </button>
-
-        </div>
-
-      </form>
-
-      </div>
-
-    </div>
-
   </div>
-
-</div>
-
 </div>
