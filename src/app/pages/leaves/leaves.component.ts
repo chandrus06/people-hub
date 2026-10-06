@@ -8,6 +8,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-leaves',
@@ -21,7 +23,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DropdownModule,
     InputNumberModule,
     CalendarModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ToastModule
   ],
   templateUrl: './leaves.component.html',
   styleUrl: './leaves.component.scss'
@@ -43,7 +46,7 @@ export class LeavesComponent {
     { label: 'Sick Leave', value: 'sick' }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private toastService: ToasterService) {
     this.leaveForm = this.fb.group({
       leaveType: [null, Validators.required],
       numberOfDays: [null, [Validators.required, Validators.min(0.5)]],
@@ -64,7 +67,7 @@ export class LeavesComponent {
 
   submitLeaveApplication() {
     if (this.leaveForm.valid) {
-      console.log('Leave Application Submitted:', this.leaveForm.value);
+      this.toastService.showSuccess('Leave application submitted successfully!', 3000);
       // Here you would typically call a service to save the leave application
       this.hideApplyLeaveModal();
     } else {

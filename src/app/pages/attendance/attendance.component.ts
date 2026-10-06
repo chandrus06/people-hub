@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-attendance',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CardModule, ButtonModule, ProgressBarModule],
+  imports: [CommonModule, ReactiveFormsModule, CardModule, ButtonModule, ProgressBarModule, ToastModule],
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.scss'
 })
@@ -18,6 +20,8 @@ export class AttendanceComponent implements OnInit {
   totalWorkedMilliseconds: number = 0;
   totalRequiredMilliseconds: number = 9 * 60 * 60 * 1000; // 9 hours
   timer: any;
+
+  constructor(private toastService: ToasterService) {}
 
   ngOnInit() {
     if (typeof localStorage !== 'undefined') {
@@ -36,6 +40,7 @@ export class AttendanceComponent implements OnInit {
         localStorage.setItem('inTime', this.inTime.toISOString());
       }
       this.startTimer();
+      this.toastService.showSuccess('Punched in successfully!', 3000);
     }
   }
 
@@ -47,6 +52,7 @@ export class AttendanceComponent implements OnInit {
       if (typeof localStorage !== 'undefined') {
         localStorage.removeItem('inTime');
       }
+      this.toastService.showSuccess('Punched out successfully!', 3000);
     }
   }
 

@@ -8,6 +8,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TabViewModule } from 'primeng/tabview';
+import { ToastModule } from 'primeng/toast';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-projects',
@@ -21,7 +23,8 @@ import { TabViewModule } from 'primeng/tabview';
     InputTextareaModule,
     DropdownModule,
     InputNumberModule,
-    TabViewModule
+    TabViewModule,
+    ToastModule
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
@@ -43,7 +46,7 @@ export class ProjectsComponent implements OnInit {
     { label: 'Project Manager', value: 'pm' }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private toastService: ToasterService) {
     this.projectDetailsForm = this.fb.group({
       projectName: ['', Validators.required],
       clientName: ['', Validators.required],
@@ -78,6 +81,7 @@ export class ProjectsComponent implements OnInit {
       this.projectDetails = this.projectDetailsForm.value;
       localStorage.setItem('projectDetails', JSON.stringify(this.projectDetails));
       this.isEditingDetails = false;
+      this.toastService.showSuccess('Project details saved successfully!', 3000);
     } else {
       this.projectDetailsForm.markAllAsTouched();
     }
@@ -97,6 +101,7 @@ export class ProjectsComponent implements OnInit {
       this.submittedUpdates.unshift(newUpdate);
       localStorage.setItem('dailyUpdates', JSON.stringify(this.submittedUpdates));
       this.dailyUpdateForm.reset();
+      this.toastService.showSuccess('Daily update submitted successfully!', 3000);
     } else {
       this.dailyUpdateForm.markAllAsTouched();
     }

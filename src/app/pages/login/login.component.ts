@@ -17,6 +17,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
 import { ApiService } from '../../app.service';
 import { AuthService } from '../../core/guards/auth.service';
+import { ToastModule } from 'primeng/toast';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +32,7 @@ import { AuthService } from '../../core/guards/auth.service';
     ButtonModule,
     CheckboxModule,
     PasswordModule,
+    ToastModule,
   ],
 
   templateUrl: './login.component.html',
@@ -44,6 +47,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private toastService: ToasterService
   ) {
     this.loginForm = this.fb.group({
       empId: ['', Validators.required],
@@ -55,38 +59,35 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      // Simulate API call
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1500);
+      
+      const loginData = {
+        empId: this.loginForm.value.empId,
+        password: this.loginForm.value.password
+      };
+
+      this.authService.loginUser(loginData).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          // Store user info if needed, token is already saved in AuthService
+          if (response.user) {
+            localStorage.setItem('loggedInUser', JSON.stringify(response.user));
+          }
+          this.toastService.showSuccess('Login successful!', 3000);
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 3000);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.toastService.showError(error.error?.message || 'Invalid employee ID or password');
+        }
+      });
     } else {
       this.loginForm.markAllAsTouched();
-      return;
     }
-
-    const registeredUser = localStorage.getItem('user');
-    
-
-    if (!registeredUser) {
-       alert('No registered user found. Please signup first.'); 
-        return; }
-     
-       const loginEmail = this.loginForm.get('email')?.value; 
-      const loginPassword = this.loginForm.get('password')?.value;
-    
-       const Signup = JSON.parse(registeredUser);
-    
-     if ( loginEmail === Signup.email &&
-       loginPassword === Signup.password )   { 
-        localStorage.setItem( 'loggedInUser', JSON.stringify(Signup) );
-      alert('Login successful!');  
-      this.router.navigate(['/dashboard']); }
-      else { 
-       alert('Invalid email or password'); } }
-
-  gotoSignup():void{
-    this.router.navigate(['/signup']);
   }
 
-  
+  gotoSignup(): void {
+    this.router.navigate(['/signup']);
+  }
 }
