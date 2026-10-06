@@ -7,11 +7,14 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 
+import { MessageService } from 'primeng/api';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
     provideClientHydration(), 
     provideAnimations(), 
-    provideHttpClient(withFetch(), withInterceptors([loaderInterceptor]))
+    provideHttpClient(withFetch(), withInterceptors([loaderInterceptor])),
+    MessageService
   ]
 };
