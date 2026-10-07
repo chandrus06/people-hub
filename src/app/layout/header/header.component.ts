@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { AuthService } from '../../core/guards/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +26,14 @@ export class HeaderComponent {
     companyname: 'Anrudix'
   };
 
+  constructor(private authService: AuthService) {}
+
   openUserModal() {
     this.showUserModal = true;
+  }
+
+  signOut() {
+    this.showUserModal = false;
+    this.authService.logout();
   }
 }
