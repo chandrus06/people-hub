@@ -4,13 +4,14 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SidenavbarComponent } from './layout/sidenavbar/sidenavbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { ApiService } from './app.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent, LoaderComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, SidenavbarComponent, FooterComponent, LoaderComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,7 +22,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ApiService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -31,8 +31,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.apiService.getMessage().subscribe((response: any) => {
-    //   console.log(response);
-    // });
+   
   }
 }

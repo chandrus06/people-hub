@@ -73,9 +73,7 @@ export class LoginComponent {
             localStorage.setItem('loggedInUser', JSON.stringify(response.user));
           }
           this.toastService.showSuccess('Login successful!', 3000);
-          setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-          }, 3000);
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           this.isLoading = false;

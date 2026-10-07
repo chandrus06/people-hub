@@ -55,13 +55,11 @@ export class SignupComponent {
     const signupData = this.signupForm.value;
     this.SignUpService.signup(signupData).subscribe({
       next: (response) => {
-        this.toastService.showSuccess('Signup successful', 3000);
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3000);
+        this.toastService.showSuccess(response.message, 3000);
+        this.router.navigate(['/login']);
       },
       error: (error) => {
-        this.toastService.showError('Signup failed. Please try again.');
+        this.toastService.showError(error.message, 3000);
       },
     });
   }
