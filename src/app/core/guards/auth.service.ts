@@ -23,7 +23,9 @@ export class AuthService {
       const token = localStorage.getItem('token');
       return !!token;
     }
-    return false;
+    // Return true on the server to prevent SSR from forcing a redirect to login.
+    // The client will perform the actual check against localStorage once hydrated.
+    return true;
   }
 
   isAuthenticatedUser(): boolean {
@@ -37,6 +39,7 @@ export class AuthService {
         tap((response: any) => {
           if (response?.token && isPlatformBrowser(this.platformId)) {
             localStorage.setItem('token', response.token);
+            localStorage.setItem('loggedInUser', JSON.stringify(response.user));
           }
         })
       );

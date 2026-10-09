@@ -1,17 +1,20 @@
-<p-toolbar styleClass="layout-header">
+<p-toolbar styleClass="layout-header custom-header">
   <div class="p-toolbar-group-start">
-    <h2 style="margin: 0; font-weight: 600; color: var(--primary-color)">
-      {{ title }}
+    <h2 class="header-title">
+      CRUD group of IT solutions People Hub
     </h2>
   </div>
   <div class="p-toolbar-group-end">
-    <p-button
-      icon="pi pi-user"
-      [text]="true"
-      [rounded]="true"
-      severity="secondary"
-      (onClick)="openUserModal()"
-    ></p-button>
+    <button class="icon-btn notification-btn">
+      <i class="pi pi-bell"></i>
+    </button>
+    <button class="profile-btn" (click)="openUserModal()">
+      <div class="avatar-circle">
+        <i class="pi pi-user"></i>
+      </div>
+      <span>Admin</span>
+      <i class="pi pi-angle-down"></i>
+    </button>
     <p-dialog
       header="User Details"
       [(visible)]="showUserModal"
@@ -32,7 +35,7 @@
           </div>
 
           <div>
-            <h3>{{ user.name }}</h3>
+            <h3>{{ user.firstName }} {{ user.lastName }}</h3>
             <span>{{ user.role }}</span>
           </div>
         </div>
@@ -60,7 +63,7 @@
 
           <div class="user-row">
             <span class="label">Company Name</span>
-            <span>{{ user.companyname }}</span>
+            <span>{{ user.company }}</span>
           </div>
         </div>
       </div>

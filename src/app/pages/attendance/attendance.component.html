@@ -1,58 +1,110 @@
 <div class="attendance-container">
-  <div class="header-section">
-    <h1>Time Tracking</h1>
-    <p class="subtitle">Record your daily in and out times.</p>
+  <!-- Header -->
+  <div class="header-row">
+    <div class="title-section">
+      <h1>Time Tracking</h1>
+      <p class="user-info">
+        <i class="pi pi-user"></i> {{ user.name }} &bull; {{ user.department }}
+      </p>
+    </div>
+    <div class="actions-section">
+      <button class="btn btn-outline"><i class="pi pi-download"></i> Export Report</button>
+      <button class="btn btn-primary"><i class="pi pi-file-edit"></i> Adjustment Request</button>
+    </div>
   </div>
 
-  <p-card styleClass="attendance-card">
-    <div class="tracker-wrapper">
-      <div class="time-display">
-        <h2>{{ formattedWorkedTime }}</h2>
-        <p>Total time worked today (Target: 9 hours)</p>
-      </div>
-
-      <div class="progress-section">
-        <p-progressBar [value]="progressPercentage" [showValue]="false"></p-progressBar>
-        <div class="progress-labels">
-          <span>0h</span>
-          <span>9h</span>
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-header">
+        <div class="icon-circle" [ngClass]="stat.colorClass">
+          <i [class]="stat.iconClass"></i>
         </div>
+        <span class="subtitle">{{ stat.subtitle }}</span>
       </div>
-
-      <div class="punch-info" *ngIf="inTime">
-        <div class="info-item">
-          <i class="pi pi-sign-in"></i>
-          <div>
-            <span class="label">Punched In At</span>
-            <span class="value">{{ inTime | date:'hh:mm:ss a' }}</span>
-          </div>
-        </div>
-        <div class="info-item" *ngIf="outTime">
-          <i class="pi pi-sign-out"></i>
-          <div>
-            <span class="label">Punched Out At</span>
-            <span class="value">{{ outTime | date:'hh:mm:ss a' }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-buttons">
-        <p-button 
-          label="Punch In (Login)" 
-          icon="pi pi-sign-in" 
-          [disabled]="inTime !== null" 
-          (onClick)="punchIn()" 
-          styleClass="p-button-success w-full lg:w-auto mr-0 lg:mr-3 mb-3 lg:mb-0">
-        </p-button>
-        <p-button 
-          label="Punch Out (Logout)" 
-          icon="pi pi-sign-out" 
-          [disabled]="inTime === null || outTime !== null" 
-          (onClick)="punchOut()" 
-          styleClass="p-button-danger w-full lg:w-auto">
-        </p-button>
+      <div class="stat-body">
+        <span class="title">{{ stat.title }}</span>
+        <h2 class="value">{{ stat.value }}</h2>
       </div>
     </div>
-  </p-card>
-  <p-toast />
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button class="toolbar-btn"><i class="pi pi-calendar"></i> October 2023</button>
+        <div class="nav-arrows">
+          <button class="arrow-btn"><i class="pi pi-chevron-left"></i></button>
+          <button class="arrow-btn"><i class="pi pi-chevron-right"></i></button>
+        </div>
+        <button class="toolbar-btn dropdown">All Status <i class="pi pi-chevron-down"></i></button>
+      </div>
+      <div class="toolbar-right">
+        <div class="search-box">
+          <i class="pi pi-search"></i>
+          <input type="text" placeholder="Search records...">
+        </div>
+        <button class="icon-btn"><i class="pi pi-filter"></i></button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Login Time</th>
+          <th>Logout Time</th>
+          <th>Total Hours</th>
+          <th>Status</th>
+          <th>Notes / Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of attendanceRecords">
+          <td class="bold-text">{{ row.date }}</td>
+          <td class="grey-text">{{ row.day }}</td>
+          <td class="bold-text blue-text">{{ row.loginTime }}</td>
+          <td class="bold-text blue-text">{{ row.logoutTime }}</td>
+          <td class="bold-text purple-text">{{ row.totalHours }}</td>
+          <td><span class="status-pill" [ngClass]="row.statusClass">{{ row.status }}</span></td>
+          <td class="grey-text">{{ row.notes }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div class="table-footer">
+      <span class="showing-text">Showing 1 to 6 of 22 records</span>
+      <div class="pagination">
+        <span class="nav-text">Previous</span>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span class="nav-text">Next</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banners -->
+  <div class="banner-grid">
+    <div class="banner-card light-blue-banner">
+      <div class="banner-icon"><i class="pi pi-calendar"></i></div>
+      <div class="banner-text">
+        <h4>Attendance Policy</h4>
+        <p>Punch-in must be recorded before 09:30 AM to avoid being marked late. Minimum 9 hours of desk time required for a full day credit.</p>
+      </div>
+    </div>
+
+    <div class="banner-card light-purple-banner">
+      <div class="banner-icon"><i class="pi pi-exclamation-circle"></i></div>
+      <div class="banner-text">
+        <h4>Missing Logs</h4>
+        <p>Discrepancies in login/logout times must be raised for approval within 48 hours via the Adjustment Request portal.</p>
+      </div>
+    </div>
+  </div>
 </div>

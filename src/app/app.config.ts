@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from './core/interceptors/loader.interceptor';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 import { MessageService } from 'primeng/api';
 
@@ -14,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), 
     provideClientHydration(), 
     provideAnimations(), 
-    provideHttpClient(withFetch(), withInterceptors([loaderInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([loaderInterceptor, authInterceptor])),
     MessageService
   ]
 };

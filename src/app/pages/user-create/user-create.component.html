@@ -1,0 +1,205 @@
+<div class="user-list-page">
+  <!-- Header Section -->
+  <div class="header-row">
+    <div class="title-section">
+      <h1>User List</h1>
+      <p class="subtitle">Manage your organization's workforce, adjust roles, and monitor departmental distribution.</p>
+    </div>
+    <div class="actions-section">
+      <button class="btn btn-outline"><i class="pi pi-filter"></i> Filter</button>
+      <button class="btn btn-primary" (click)="showModal()"><i class="pi pi-user-plus"></i> Add User</button>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <p-table 
+      #dt 
+      [value]="users" 
+      [paginator]="true" 
+      [rows]="8" 
+      [loading]="loading"
+      [globalFilterFields]="['firstName','lastName','email','employeeId','role','department']"
+      styleClass="p-datatable-custom"
+    >
+      <ng-template pTemplate="caption">
+        <div class="table-caption">
+          <div class="caption-left">
+            <h3>Manage Users</h3>
+            <span>total {{ users.length || 248 }} users registered</span>
+          </div>
+          <div class="caption-right">
+            <span class="p-input-icon-left search-input">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search by name, ID or email..." />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th><i class="pi pi-id-card"></i> Emp ID</th>
+          <th>Name</th>
+          <th><i class="pi pi-envelope"></i> Email</th>
+          <th><i class="pi pi-building"></i> Department</th>
+          <th><i class="pi pi-verified"></i> Role</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td class="emp-id">{{ user.employeeId || user.empId || 'EMP000' }}</td>
+          <td>
+            <div class="user-info">
+              <div class="avatar" *ngIf="!user.profileImage">{{ getInitials(user.firstName, user.lastName) }}</div>
+              <img *ngIf="user.profileImage" [src]="user.profileImage" class="avatar-img" />
+              <div class="name-block">
+                <span class="name">{{ user.firstName }} {{ user.lastName }}</span>
+                <span class="email-sub">{{ user.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td class="email-cell">{{ user.email }}</td>
+          <td class="dept-cell">{{ user.department }}</td>
+          <td>
+            <p-badge [value]="user.role | uppercase" [severity]="getRoleSeverity(user.role)"></p-badge>
+          </td>
+          <td class="actions-cell">
+            <button class="action-btn edit"><i class="pi pi-file-edit"></i></button>
+            <button class="action-btn delete"><i class="pi pi-trash"></i></button>
+            <button class="action-btn menu"><i class="pi pi-ellipsis-v"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center">No users found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Bottom Metric Cards -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-content">
+        <span class="label text-blue">NEW JOINEES</span>
+        <h2 class="value text-blue">12</h2>
+      </div>
+      <div class="icon-circle bg-blue"><i class="pi pi-users"></i></div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-content">
+        <span class="label text-purple">DEPARTMENTS</span>
+        <h2 class="value text-purple">08</h2>
+      </div>
+      <div class="icon-circle bg-purple"><i class="pi pi-building"></i></div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-content">
+        <span class="label text-green">ACTIVE NOW</span>
+        <h2 class="value text-green">184</h2>
+      </div>
+      <div class="icon-circle bg-green"><i class="pi pi-check-circle"></i></div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-content">
+        <span class="label text-yellow">PENDING REQUESTS</span>
+        <h2 class="value text-yellow">04</h2>
+      </div>
+      <div class="icon-circle bg-yellow"><i class="pi pi-ellipsis-h"></i></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Dialog for adding a user -->
+<p-dialog header="Add User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '700px'}" [draggable]="false" [resizable]="false">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    
+    <div class="form-grid">
+      
+      <!-- Personal Details Section -->
+      <div class="full-width">
+        <h5 class="section-title">Personal Information</h5>
+        <hr class="section-divider" />
+      </div>
+
+      <!-- Profile Upload -->
+      <div class="profile-upload-container">
+        <div class="profile-image-preview">
+          <img [src]="profileImageUrl || 'https://ui-avatars.com/api/?name=User&background=e2e8f0&color=64748b&size=100'" alt="Profile" />
+        </div>
+        <p-fileUpload mode="basic" chooseLabel="Upload Profile Picture" accept="image/*" maxFileSize="1000000" (onSelect)="onProfileSelect($event)" [auto]="false"></p-fileUpload>
+      </div>
+
+      <div class="form-field">
+        <label for="firstName">First Name <span class="required-asterisk">*</span></label>
+        <input id="firstName" type="text" pInputText formControlName="firstName" placeholder="First Name" />
+      </div>
+
+      <div class="form-field">
+        <label for="lastName">Last Name <span class="required-asterisk">*</span></label>
+        <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="Last Name" />
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email Address <span class="required-asterisk">*</span></label>
+        <input id="email" type="email" pInputText formControlName="email" placeholder="Email Address" />
+      </div>
+
+      <div class="form-field">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="text" pInputText formControlName="phone" placeholder="Phone Number" />
+      </div>
+
+      <div class="form-field full-width">
+        <label for="address">Address</label>
+        <input id="address" type="text" pInputText formControlName="address" placeholder="Full Address" />
+      </div>
+
+      <!-- Professional Details Section -->
+      <div class="full-width" style="margin-top: 1rem;">
+        <h5 class="section-title">Professional Information</h5>
+        <hr class="section-divider" />
+      </div>
+
+      <div class="form-field">
+        <label for="employeeId">Employee ID <span class="required-asterisk">*</span></label>
+        <input id="employeeId" type="text" pInputText formControlName="employeeId" placeholder="e.g. EMP-101" />
+      </div>
+
+      <div class="form-field">
+        <label for="companyName">Company Name <span class="required-asterisk">*</span></label>
+        <input id="companyName" type="text" pInputText formControlName="companyName" placeholder="Company Name" />
+      </div>
+
+      <div class="form-field">
+        <label for="companyMail">Company Email <span class="required-asterisk">*</span></label>
+        <input id="companyMail" type="email" pInputText formControlName="companyMail" placeholder="Company Email" />
+      </div>
+
+      <div class="form-field">
+        <label for="department">Department <span class="required-asterisk">*</span></label>
+        <input id="department" type="text" pInputText formControlName="department" placeholder="Department" />
+      </div>
+
+      <div class="form-field">
+        <label for="role">Role <span class="required-asterisk">*</span></label>
+        <input id="role" type="text" pInputText formControlName="role" placeholder="e.g. Admin, User, Manager" />
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text p-button-secondary" (onClick)="displayModal = false"></p-button>
+      <p-button label="Save User" icon="pi pi-check" type="submit" [disabled]="userForm.invalid"></p-button>
+    </div>
+  </form>
+</p-dialog>

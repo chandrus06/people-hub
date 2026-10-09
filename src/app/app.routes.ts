@@ -9,6 +9,7 @@ import { SignupComponent } from './pages/sign-up/sign-up.component';
 
 
 import { AuthGuard } from './core/guards/auth.guard';
+import { UserCreateComponent } from './pages/user-create/user-create.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'signup', pathMatch: 'full' },
@@ -17,6 +18,11 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'user-list',
+    component: UserCreateComponent,
     canActivate: [AuthGuard],
   },
   {

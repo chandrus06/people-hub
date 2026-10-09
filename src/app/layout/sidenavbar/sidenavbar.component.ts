@@ -15,8 +15,9 @@ export class SidenavbarComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
 
   items: MenuItem[] = [
+    { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/dashboard' },
     { label: 'Login / Logout', icon: 'pi pi-clock', routerLink: '/attendance' },
-    { separator: true },
+    { label: 'User List', icon: 'pi pi-users', routerLink: '/user-list' },
     { label: 'Project Updates', icon: 'pi pi-briefcase', routerLink: '/projects' },
     { label: 'Leaves', icon: 'pi pi-calendar-times', routerLink: '/leaves' },
     { label: 'Technology Core Teams', icon: 'pi pi-users', routerLink: '/teams' }

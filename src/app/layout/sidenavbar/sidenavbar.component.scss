@@ -21,10 +21,28 @@
     border-radius: 0;
     
     .p-menuitem-link {
-        padding: 1rem 1.5rem;
+        padding: 0.875rem 1.25rem;
+        margin: 0.35rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease-in-out;
         
+        &:hover {
+            background-color: var(--surface-hover, #f3f4f6);
+        }
+
         &:focus {
             box-shadow: none;
+        }
+
+        /* Active item styling */
+        &.router-link-active, &.p-menuitem-link-active {
+            background: linear-gradient(90deg, var(--primary-color, #4f46e5) 0%, var(--primary-600, #4338ca) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2), 0 2px 4px -1px rgba(79, 70, 229, 0.1);
+
+            .p-menuitem-icon, .p-menuitem-text {
+                color: #ffffff !important;
+            }
         }
     }
     

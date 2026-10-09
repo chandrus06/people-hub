@@ -47,6 +47,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private apiService: ApiService,
     private toastService: ToasterService
   ) {
     this.loginForm = this.fb.group({
@@ -68,11 +69,9 @@ export class LoginComponent {
       this.authService.loginUser(loginData).subscribe({
         next: (response) => {
           this.isLoading = false;
-          // Store user info if needed, token is already saved in AuthService
-          if (response.user) {
-            localStorage.setItem('loggedInUser', JSON.stringify(response.user));
-          }
+          // Token is already saved in AuthService
           this.toastService.showSuccess('Login successful!', 3000);
+          this.apiService.setLoggedInUser(response.user);
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
